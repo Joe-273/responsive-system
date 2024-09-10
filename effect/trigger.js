@@ -28,9 +28,9 @@ export function trigger(target, type, key) {
   if (!effectFns) return;
   for (const effectFn of effectFns) {
     if (effectFn === activeEffect) continue;
-    if (effectFn.options && effectFn.options.shcheduler) {
+    if (effectFn.options && effectFn.options.scheduler) {
       // 说明用户传递了回调函数，用户期望自己来处理依赖的函数
-      effectFn.options.shcheduler(effectFn);
+      effectFn.options.scheduler(effectFn);
     } else {
       // 执行依赖函数
       effectFn();

@@ -6,35 +6,26 @@
 // - 是否存在某个属性：读取
 // - 遍历属性：读取
 
+import { computed } from "./computed.js";
 import { effect } from "./effect/effect.js";
 import reactive from "./reactive.js"
 
 // 拦截后的处理
 // - 收集器
 // - 触发器
-const obj = {
+const state = reactive({
   a: 1,
-  b: 2,
-  c: {
-    name: "张三",
-    age: "18",
-  }
-}
-const state = reactive(obj)
+  b: 2
+})
 
+const sum = computed(() => {
+  console.log("计算属性重新计算")
+  return state.a + state.b
+})
+// console.log(sum.value)
 effect(() => {
-  if (state.a === 1) {
-    state.b;
-  } else {
-    state.c;
-  }
-  console.log("执行了函数1");
-  effect(() => {
-    console.log(state.c);
-    console.log("执行了函数2");
-  });
-});
+  console.log("RANDER函数重新运行", sum.value)
+})
 
-
-console.log("------------------------------");
 state.a = 100
+
